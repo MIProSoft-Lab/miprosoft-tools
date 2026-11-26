@@ -82,6 +82,18 @@ pip install fonttools uharfbuzz
 python3 scripts/build_group_logo.py "MIPro" "Soft" --slug mipro-soft --both-bold
 ```
 
+## Group icon
+
+`assets/logo.svg` is the MIProSoft icon (UIB-blue rounded square, white bar, "MIPro / Soft" in UIBsans Bold,
+text as outlines). `assets/logo.png` is the same icon at 512×512, for places that need a bitmap (favicon
+fallback, share previews). To change it, edit the settings at the top of `scripts/build_team_icon.py` and run:
+
+```sh
+python3 scripts/build_team_icon.py      # needs fonttools and uharfbuzz, like build_group_logo.py
+```
+
+Then export `assets/logo.svg` to a 512×512 PNG with a transparent background (any SVG editor or browser).
+
 ## Banner editor
 
 - **Background image**: choose a file, drop it on the preview or paste it. Drag the preview to reposition it and scroll to zoom.
