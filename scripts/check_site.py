@@ -24,7 +24,7 @@ def refs(path):
     return [m.group(1).strip() for m in pattern.finditer(text)]
 
 
-def resolve(site, page, ref):
+def resolve(page, ref):
     target_path = unquote(urlsplit(ref).path)
     if not target_path:
         return None
@@ -47,7 +47,7 @@ def main():
             if urlsplit(ref).path.startswith("/"):
                 problems.append(f"{page.relative_to(site)}: absolute path '{ref}' breaks under /<repo>/ on GitHub Pages")
                 continue
-            target = resolve(site, page, ref)
+            target = resolve(page, ref)
             if target and not target.exists():
                 problems.append(f"{page.relative_to(site)}: '{ref}' not found")
             elif target and site not in target.parents and target != site:

@@ -336,7 +336,8 @@ function scheduleRender() {
     document.getElementById('sizeLabel').textContent = `${w} × ${h} px`;
     const note = document.getElementById('logoAutoNote');
     note.textContent = state.logoVariant === 'auto' ? `→ ${{ white: 'negative', dark: 'positive', color: 'full colour' }[variant]}` : '';
-    document.getElementById('dropHint').classList.toggle('hidden', !!bgImage);
+    document.getElementById('dropHint').hidden = !!bgImage;
+    document.getElementById('removeImageBtn').hidden = !bgImage;
   });
 }
 
@@ -406,8 +407,21 @@ function loadImageFile(file) {
   img.src = URL.createObjectURL(file);
 }
 
+/** Back to a gradient-only banner. */
+function removeImage() {
+  if (bgImage) URL.revokeObjectURL(bgImage.src);
+  bgImage = null;
+  scheduleRender();
+}
+
 function setupImageInteractions() {
-  document.getElementById('imageInput').addEventListener('change', (e) => loadImageFile(e.target.files[0]));
+  const fileInput = document.getElementById('imageInput');
+  fileInput.addEventListener('change', () => {
+    loadImageFile(fileInput.files[0]);
+    fileInput.value = ''; // so choosing the same file again still triggers a change
+  });
+  document.getElementById('chooseImageLink').addEventListener('click', () => fileInput.click());
+  document.getElementById('removeImageBtn').addEventListener('click', removeImage);
 
   const stage = document.getElementById('stage');
   stage.addEventListener('dragover', (e) => { e.preventDefault(); stage.classList.add('drag-over'); });

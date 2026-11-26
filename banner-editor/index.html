@@ -47,6 +47,7 @@
           <input type="file" id="imageInput" accept="image/*">
           <span>Choose image…</span>
         </label>
+        <button type="button" id="removeImageBtn" class="reset" hidden>Remove image (gradient only)</button>
         <p class="hint">You can also drop or paste an image on the preview. Drag the preview to move it, scroll to zoom.</p>
         <label>Zoom <output data-for="imgZoom"></output>
           <input type="range" data-key="imgZoom" min="100" max="300" step="1"></label>
@@ -156,9 +157,9 @@
     <section class="stage" id="stage">
       <div class="canvas-wrap" id="canvasWrap">
         <canvas id="canvas"></canvas>
-        <div class="drop-hint" id="dropHint"><span>Drop, paste or choose a background image</span></div>
       </div>
-      <p class="size-label" id="sizeLabel"></p>
+      <p class="size-label"><span id="sizeLabel"></span><span id="dropHint"> · No background image: drop or paste one here, or
+        <button type="button" id="chooseImageLink" class="link-button">choose a file</button></span></p>
     </section>
   </main>
 

@@ -93,11 +93,10 @@ canvas {
   border-radius: 2px; box-shadow: var(--shadow-hover); cursor: grab; touch-action: none;
 }
 canvas.dragging { cursor: grabbing; }
-.drop-hint { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
-.drop-hint span { padding: 0.6rem 1.1rem; border-radius: 999px; background: rgb(0 0 0 / 0.55); color: #fff; }
-.drop-hint.hidden { display: none; }
 .stage.drag-over .canvas-wrap { outline: 3px dashed var(--accent); outline-offset: 6px; }
-.size-label { margin: 0.75rem 0 0; color: var(--muted); font-size: 0.82rem; }
+.size-label { margin: 0.75rem 0 0; color: var(--muted); font-size: 0.82rem; text-align: center; }
+.link-button { padding: 0; border: 0; background: none; cursor: pointer; color: var(--accent); font: inherit; text-decoration: underline; }
+.link-button:hover { color: var(--accent-strong); }
 
 @media (max-width: 800px) {
   body.app { height: auto; }
