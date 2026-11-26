@@ -21,11 +21,24 @@ python3 -m http.server 8000
 
 ## Publishing on GitHub Pages
 
-1. Push the repository to GitHub.
-2. In **Settings → Pages**, choose **Deploy from a branch**, branch `main`, folder `/ (root)`.
-3. The site will be at `https://<user>.github.io/<repo>/`.
+The workflow in `.github/workflows/deploy.yml` publishes the tools on every push to `main` (it can also be
+run by hand from the **Actions** tab). One-time setup:
 
-The `.nojekyll` file tells GitHub Pages to serve the files as they are.
+1. Push the repository to GitHub.
+2. In **Settings → Pages → Build and deployment**, set **Source** to **GitHub Actions**.
+3. Push to `main`. The site will be at `https://<owner>.github.io/<repo>/`.
+
+What the workflow does:
+
+- **build**: copies the files the pages need into `_site/`, leaving out development material (original
+  `.ai`/`.eps` logos, `sample/`, `scripts/` folders, Markdown files). It then runs `scripts/check_site.py`,
+  which fails the run if a page links to a missing file or uses an absolute path (`/…`), which would break
+  under `/<repo>/`. The list of published files is shown in the run's summary.
+- **deploy**: publishes `_site/` to GitHub Pages, only from `main`.
+- On pull requests it runs the build and checks, without publishing.
+- Until Pages is set to "GitHub Actions", it skips publishing and says so in the run's summary.
+
+To run the same check locally: `python3 scripts/check_site.py .`
 
 ## Look and feel
 
