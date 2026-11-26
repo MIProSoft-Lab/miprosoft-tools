@@ -94,8 +94,8 @@
         <summary>Logo</summary>
         <label>Logo
           <select data-key="logoBrand">
-            <option value="uib">UIB</option>
             <option value="team">UIB · MIPro Soft</option>
+            <option value="uib">UIB</option>
           </select>
         </label>
         <label>Version <span class="auto-note" id="logoAutoNote"></span>
@@ -112,12 +112,12 @@
 
       <details open>
         <summary>Course data</summary>
-        <label>Label <input type="text" data-key="label"></label>
+        <label>Label <input type="text" data-key="label" placeholder="e.g. Microcredencial universitària"></label>
         <label>Label background <input type="color" data-key="labelBg"></label>
-        <label>Title <textarea data-key="title" rows="2"></textarea></label>
-        <label>Subtitle <input type="text" data-key="subtitle"></label>
-        <label>Dates <textarea data-key="dates" rows="2"></textarea></label>
-        <label>Modality / extra info <textarea data-key="modality" rows="1"></textarea></label>
+        <label>Title <textarea data-key="title" rows="2" placeholder="e.g. Direcció de Projectes"></textarea></label>
+        <label>Subtitle <input type="text" data-key="subtitle" placeholder="e.g. (5 ECTS)"></label>
+        <label>Dates <textarea data-key="dates" rows="2" placeholder="e.g. Del 25 de novembre de 2026&#10;al 7 de gener de 2027"></textarea></label>
+        <label>Modality / extra info <textarea data-key="modality" rows="1" placeholder="e.g. Presencial"></textarea></label>
         <div class="row">
           <label>Text colour
             <select data-key="textColorMode">
@@ -141,7 +141,7 @@
       <details open>
         <summary>Badge</summary>
         <label class="check"><input type="checkbox" data-key="badgeShow"> Show badge</label>
-        <label>Text <textarea data-key="badgeText" rows="2"></textarea></label>
+        <label>Text <textarea data-key="badgeText" rows="2" placeholder="e.g. Matrícula&#10;oberta"></textarea></label>
         <label>Size <output data-for="badgeSize"></output>
           <input type="range" data-key="badgeSize" min="50" max="160" step="1"></label>
         <label class="check"><input type="checkbox" data-key="badgeAuto"> Automatic position</label>
