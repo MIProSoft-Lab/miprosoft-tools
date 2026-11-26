@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Course banner editor · MIProSoft tools</title>
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="stylesheet" href="../assets/site.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="../assets/site.js"></script>
+</head>
+<body class="app">
+  <header data-site-header="compact"></header>
+
+  <div class="toolbar">
+    <div class="toolbar-title">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../">Tools</a> <span aria-hidden="true">›</span></nav>
+      <h1>Course banner editor</h1>
+    </div>
+    <div class="actions">
+      <select data-key="format" aria-label="File format">
+        <option value="png">PNG</option>
+        <option value="jpeg">JPEG</option>
+      </select>
+      <button id="copyBtn" type="button" class="button secondary">Copy</button>
+      <button id="downloadAllBtn" type="button" class="button secondary">Download all sizes</button>
+      <button id="downloadBtn" type="button" class="button">Download</button>
+    </div>
+  </div>
+
+  <main class="layout">
+    <aside class="panel">
+      <details open>
+        <summary>Format</summary>
+        <label>Size
+          <select data-key="preset" id="presetSelect"></select>
+        </label>
+        <div class="row custom-size">
+          <label>Width <input type="number" data-key="customW" min="100" max="4000" step="10"></label>
+          <label>Height <input type="number" data-key="customH" min="100" max="4000" step="10"></label>
+        </div>
+      </details>
+
+      <details open>
+        <summary>Background image</summary>
+        <label class="file">
+          <input type="file" id="imageInput" accept="image/*">
+          <span>Choose image…</span>
+        </label>
+        <p class="hint">You can also drop or paste an image on the preview. Drag the preview to move it, scroll to zoom.</p>
+        <label>Zoom <output data-for="imgZoom"></output>
+          <input type="range" data-key="imgZoom" min="100" max="300" step="1"></label>
+        <label>Horizontal position <output data-for="imgX"></output>
+          <input type="range" data-key="imgX" min="0" max="100" step="1"></label>
+        <label>Vertical position <output data-for="imgY"></output>
+          <input type="range" data-key="imgY" min="0" max="100" step="1"></label>
+        <label>Saturation <output data-for="imgSat"></output>
+          <input type="range" data-key="imgSat" min="0" max="200" step="1"></label>
+        <label>Brightness <output data-for="imgBright"></output>
+          <input type="range" data-key="imgBright" min="50" max="150" step="1"></label>
+      </details>
+
+      <details open>
+        <summary>Gradient</summary>
+        <div class="swatches" id="gradientPresets"></div>
+        <div class="row">
+          <label>Start <input type="color" data-key="gradC1"></label>
+          <label>Opacity <output data-for="gradA1"></output>
+            <input type="range" data-key="gradA1" min="0" max="100" step="1"></label>
+        </div>
+        <div class="row">
+          <label>End <input type="color" data-key="gradC2"></label>
+          <label>Opacity <output data-for="gradA2"></output>
+            <input type="range" data-key="gradA2" min="0" max="100" step="1"></label>
+        </div>
+        <label>Angle <output data-for="gradAngle"></output>
+          <input type="range" data-key="gradAngle" min="0" max="360" step="5"></label>
+        <label>Blend mode
+          <select data-key="gradBlend">
+            <option value="source-over">Normal</option>
+            <option value="multiply">Multiply</option>
+            <option value="screen">Screen</option>
+            <option value="overlay">Overlay</option>
+            <option value="soft-light">Soft light</option>
+            <option value="color">Color</option>
+          </select>
+        </label>
+        <label class="check"><input type="checkbox" data-key="cornerShow"> Curved corner</label>
+        <label>Corner colour <input type="color" data-key="cornerColor"></label>
+      </details>
+
+      <details open>
+        <summary>Logo</summary>
+        <label>Logo
+          <select data-key="logoBrand">
+            <option value="uib">UIB</option>
+            <option value="team">UIB · MIPro Soft</option>
+          </select>
+        </label>
+        <label>Version <span class="auto-note" id="logoAutoNote"></span>
+          <select data-key="logoVariant">
+            <option value="auto">Auto (by background)</option>
+            <option value="white">Negative (white)</option>
+            <option value="dark">Positive (dark)</option>
+            <option value="color">Full colour</option>
+          </select>
+        </label>
+        <label>Size <output data-for="logoSize"></output>
+          <input type="range" data-key="logoSize" min="50" max="160" step="1"></label>
+      </details>
+
+      <details open>
+        <summary>Course data</summary>
+        <label>Label <input type="text" data-key="label"></label>
+        <label>Label background <input type="color" data-key="labelBg"></label>
+        <label>Title <textarea data-key="title" rows="2"></textarea></label>
+        <label>Subtitle <input type="text" data-key="subtitle"></label>
+        <label>Dates <textarea data-key="dates" rows="2"></textarea></label>
+        <label>Modality / extra info <textarea data-key="modality" rows="1"></textarea></label>
+        <div class="row">
+          <label>Text colour
+            <select data-key="textColorMode">
+              <option value="auto">Auto</option>
+              <option value="custom">Custom</option>
+            </select>
+          </label>
+          <label>Custom <input type="color" data-key="textColor"></label>
+        </div>
+        <label>Text size <output data-for="textScale"></output>
+          <input type="range" data-key="textScale" min="60" max="140" step="1"></label>
+        <label>Vertical alignment
+          <select data-key="valign">
+            <option value="top">Below the logo</option>
+            <option value="center">Centre</option>
+            <option value="bottom">Bottom</option>
+          </select>
+        </label>
+      </details>
+
+      <details open>
+        <summary>Badge</summary>
+        <label class="check"><input type="checkbox" data-key="badgeShow"> Show badge</label>
+        <label>Text <textarea data-key="badgeText" rows="2"></textarea></label>
+        <label>Size <output data-for="badgeSize"></output>
+          <input type="range" data-key="badgeSize" min="50" max="160" step="1"></label>
+        <label class="check"><input type="checkbox" data-key="badgeAuto"> Automatic position</label>
+        <label>Horizontal position <output data-for="badgeX"></output>
+          <input type="range" data-key="badgeX" min="0" max="100" step="0.5"></label>
+        <label>Vertical position <output data-for="badgeY"></output>
+          <input type="range" data-key="badgeY" min="0" max="100" step="0.5"></label>
+      </details>
+
+      <button id="resetBtn" type="button" class="reset">Reset all settings</button>
+    </aside>
+
+    <section class="stage" id="stage">
+      <div class="canvas-wrap" id="canvasWrap">
+        <canvas id="canvas"></canvas>
+        <div class="drop-hint" id="dropHint"><span>Drop, paste or choose a background image</span></div>
+      </div>
+      <p class="size-label" id="sizeLabel"></p>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

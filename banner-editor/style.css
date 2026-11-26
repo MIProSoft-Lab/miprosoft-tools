@@ -1,0 +1,107 @@
+/* Banner editor layout. Colours, fonts, buttons and form controls come from
+   ../assets/site.css (the MIProSoft look and feel). */
+
+/* A full-height app: header, tool bar, then the panel and the preview. */
+body.app { height: 100vh; min-height: 0; }
+
+.toolbar {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+  padding: 0.6rem 1.5rem; background: var(--tint); border-bottom: 1px solid var(--rule);
+}
+.toolbar-title { display: flex; align-items: baseline; gap: 0.5rem; }
+.breadcrumb { font-size: 0.85rem; color: var(--muted); }
+.toolbar h1 { margin: 0; font-size: 1.25rem; line-height: 1.2; letter-spacing: -0.01em; }
+.actions { display: flex; gap: 0.5rem; align-items: center; }
+.actions select { padding-top: 0.45rem; padding-bottom: 0.45rem; }
+
+.layout { flex: 1; display: flex; min-height: 0; }
+
+.panel {
+  width: 340px; flex-shrink: 0; overflow-y: auto;
+  background: var(--surface); border-right: 1px solid var(--rule); padding: 0.25rem 1.25rem 1.5rem;
+}
+details { border-bottom: 1px solid var(--rule); padding: 0.75rem 0; }
+summary {
+  cursor: pointer; padding: 0.15rem 0 0.35rem; color: var(--accent);
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+}
+summary:hover { color: var(--accent-strong); }
+label { display: block; margin: 0.55rem 0; color: var(--muted); font-size: 0.82rem; }
+label > input:not([type=checkbox]):not([type=color]), label > select, label > textarea { display: block; width: 100%; margin-top: 0.25rem; }
+textarea { resize: vertical; }
+input[type=color] {
+  width: 44px; height: 30px; padding: 2px; margin-left: 6px; vertical-align: middle;
+  border: 1px solid var(--rule); border-radius: 6px; background: var(--surface);
+}
+/* Number box next to a slider's name: type the value, or use the arrow keys.
+   Negative margins keep it within the text line, so the slider doesn't move. */
+.num { float: right; display: inline-flex; align-items: center; gap: 2px; margin: -3px 0; color: var(--muted); }
+.num input[type=number] {
+  width: 3.4rem; height: 1.6rem; padding: 0 0.35rem; text-align: right;
+  font-size: 0.82rem; font-variant-numeric: tabular-nums; color: var(--fg);
+  border-color: transparent; background: var(--tint); -moz-appearance: textfield;
+}
+.num input[type=number]:hover { border-color: var(--rule); }
+.num input[type=number]:focus { border-color: var(--accent); background: var(--surface); }
+.num input::-webkit-outer-spin-button, .num input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+label.check { display: flex; align-items: center; gap: 0.5rem; color: var(--fg); }
+.row { display: flex; gap: 0.75rem; align-items: flex-end; }
+.row > label { flex: 1; }
+/* In a row, a colour field has its name above the swatch, so swatches line up. */
+.row > label:has(> input[type=color]) { flex: 0 0 4.5rem; }
+.row > label > input[type=color] { display: block; margin: 0.25rem 0 0; }
+/* Rows with a swatch: names on one line, the slider centred on the 30px swatch. */
+.row:has(input[type=color]) { align-items: flex-start; }
+.row > label > input[type=range] { margin-top: calc(0.25rem + 7px); }
+.custom-size { display: none; }
+.custom-size.visible { display: flex; }
+.hint { margin: 0.4rem 0; color: var(--muted); font-size: 0.75rem; line-height: 1.45; }
+.auto-note { color: var(--accent); font-weight: 700; }
+
+.file input[type=file] { display: none !important; }
+.file span {
+  display: block; padding: 0.55rem; text-align: center; cursor: pointer;
+  border: 1px dashed var(--accent); border-radius: 6px; color: var(--accent); font-weight: 700;
+}
+.file span:hover { background: var(--tint); }
+
+.swatches { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 0.4rem 0 0.6rem; }
+.swatches button {
+  height: 34px; padding: 0; border: 2px solid transparent; border-radius: 6px; cursor: pointer;
+  color: #fff; font-size: 0.7rem; font-weight: 700; text-shadow: 0 1px 2px rgb(0 0 0 / 0.5);
+}
+.swatches button:hover { border-color: var(--fg); }
+
+.reset {
+  margin-top: 0.75rem; padding: 0; border: 0; background: none; cursor: pointer;
+  color: var(--muted); font-size: 0.82rem; text-decoration: underline;
+}
+.reset:hover { color: var(--accent); }
+
+/* Preview on a checkerboard, so transparent areas would show. */
+.stage {
+  --check: color-mix(in srgb, var(--rule) 60%, var(--bg));
+  flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 1.5rem; background-color: var(--bg);
+  background-image: linear-gradient(45deg, var(--check) 25%, transparent 25%), linear-gradient(-45deg, var(--check) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--check) 75%), linear-gradient(-45deg, transparent 75%, var(--check) 75%);
+  background-size: 20px 20px; background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+}
+.canvas-wrap { position: relative; display: flex; max-width: 100%; max-height: calc(100vh - 210px); }
+canvas {
+  display: block; max-width: 100%; max-height: calc(100vh - 210px); object-fit: contain;
+  border-radius: 2px; box-shadow: var(--shadow-hover); cursor: grab; touch-action: none;
+}
+canvas.dragging { cursor: grabbing; }
+.drop-hint { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+.drop-hint span { padding: 0.6rem 1.1rem; border-radius: 999px; background: rgb(0 0 0 / 0.55); color: #fff; }
+.drop-hint.hidden { display: none; }
+.stage.drag-over .canvas-wrap { outline: 3px dashed var(--accent); outline-offset: 6px; }
+.size-label { margin: 0.75rem 0 0; color: var(--muted); font-size: 0.82rem; }
+
+@media (max-width: 800px) {
+  body.app { height: auto; }
+  .layout { flex-direction: column-reverse; }
+  .panel { width: 100%; border-right: none; }
+  .canvas-wrap, canvas { max-height: 70vh; }
+}
