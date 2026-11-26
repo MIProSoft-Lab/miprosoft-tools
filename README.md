@@ -6,7 +6,7 @@ feel (see below), which follows the [group website](https://github.com/MIProSoft
 
 | Tool | Folder | Description |
 | --- | --- | --- |
-| Course banner editor | [`banner-editor/`](banner-editor/) | Ads and banners for courses: background photo + gradient + UIB logo + course data. |
+| Banner editor | [`banner-editor/`](banner-editor/) | Banners and social media images for courses, events, news…: background photo + gradient + logo + text. |
 
 ## Running locally
 
@@ -101,8 +101,8 @@ Then export `assets/logo.svg` to a 512×512 PNG with a transparent background (a
 - **Logo**: choose the UIB logo or the UIB · MIPro Soft group logo (copies of `logos/mipro-soft/` live in
   `banner-editor/assets/logos/`). In *Auto* mode it checks how bright the area behind the logo is and picks the negative (white),
   positive (dark) or full-colour version. You can also choose one yourself.
-- **Course data**: label, title, subtitle, dates and modality. Empty fields are left out. Use line breaks to control wrapping.
-- **Badge**: optional round "Matrícula oberta" badge.
+- **Content**: label, title, subtitle, highlight (bold, e.g. dates) and details. Empty fields are left out. Use line breaks to control wrapping.
+- **Badge**: optional round badge, e.g. "Matrícula oberta" or "Register now".
 - **Export**: download the current size, or every preset size at once, as PNG or JPEG. Settings (not the image) are remembered in the browser.
 
 Banner text uses UIBsans Bold, Regular and Light, loaded through `assets/site.css`.

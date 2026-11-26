@@ -29,14 +29,14 @@ const DEFAULTS = {
   gradBlend: 'source-over',
   cornerShow: true, cornerColor: '#ffffff',
   logoBrand: 'team', logoVariant: 'auto', logoSize: 100,
-  label: 'Tipus de curs',
-  title: 'Títol del curs',
-  subtitle: '(X ECTS)',
-  dates: 'Del DD de mes de AAAA\nal DD de mes de AAAA',
-  modality: 'Modalitat',
+  label: 'Label',
+  title: 'Title',
+  subtitle: 'Subtitle',
+  highlight: 'Highlighted information\n(dates, place…)',
+  details: 'More details',
   textColorMode: 'auto', textColor: '#ffffff',
   textScale: 100, valign: 'bottom',
-  badgeShow: true, badgeText: 'Matrícula\noberta', badgeSize: 100, badgeAuto: true, badgeX: 87.5, badgeY: 76,
+  badgeShow: true, badgeText: 'Badge\ntext', badgeSize: 100, badgeAuto: true, badgeX: 87.5, badgeY: 76,
 };
 
 const FONT = '"UIBsans", system-ui, sans-serif';
@@ -193,15 +193,15 @@ function layoutText(c, W, H, s, ts, contentTop) {
   const sub = wrap(c, state.subtitle, subFont, maxW);
   if (sub.length) add({ type: 'text', lines: sub, font: subFont, lh: 56 * ts, after: 0 });
 
-  const datesFont = `700 ${34 * ts}px ${FONT}`;
-  const dates = wrap(c, state.dates, datesFont, maxW);
-  const modFont = `400 ${32 * ts}px ${FONT}`;
-  const mod = wrap(c, state.modality, modFont, maxW);
-  if ((dates.length || mod.length) && (title.length || sub.length)) {
+  const highlightFont = `700 ${34 * ts}px ${FONT}`;
+  const highlight = wrap(c, state.highlight, highlightFont, maxW);
+  const detailsFont = `400 ${32 * ts}px ${FONT}`;
+  const details = wrap(c, state.details, detailsFont, maxW);
+  if ((highlight.length || details.length) && (title.length || sub.length)) {
     add({ type: 'divider', h: 2 * ts, before: 28 * ts, after: 26 * ts });
   }
-  if (dates.length) add({ type: 'text', lines: dates, font: datesFont, lh: 40 * ts, after: 0 });
-  if (mod.length) add({ type: 'text', lines: mod, font: modFont, lh: 38 * ts, after: 0 });
+  if (highlight.length) add({ type: 'text', lines: highlight, font: highlightFont, lh: 40 * ts, after: 0 });
+  if (details.length) add({ type: 'text', lines: details, font: detailsFont, lh: 38 * ts, after: 0 });
 
   let total = 0;
   for (const b of blocks) {
