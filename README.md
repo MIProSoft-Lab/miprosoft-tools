@@ -66,6 +66,8 @@ To run the same check locally: `python3 scripts/check_site.py .`
 
    Use the CSS variables (`--accent`, `--tint`, `--rule`, `--muted`…) and the `.button` / `.button.secondary`
    classes so the tool works in both themes.
+   For colour fields with a palette, also load `../assets/colour-picker.js` and call
+   `ColourPicker.enhance(inputs, groups)` (see the comment at the top of that file).
 3. Add a card for it in the root `index.html` and a row in the table above.
 
 ## Research group logos
@@ -100,8 +102,9 @@ Then export `assets/logo.svg` to a 512×512 PNG with a transparent background (a
 - **Gradient**: two colours with their own opacity, angle and blend mode. Presets come in groups: the original
   sample-banner gradients; combinations from the UIB secondary palette in the same style (two contrasting hues,
   e.g. Indigo → Ochre, Pine → Lime, Brown → Teal), so each kind of activity can have its own look; UIB blue with
-  secondary colours; and two light presets for dark text. The colour pickers
-  suggest every UIB colour (in Chromium-based browsers). The colours, with their Pantone references, are listed
+  secondary colours; and two light presets for dark text. Every colour field
+  opens a palette with the UIB institutional and secondary colours (name, Pantone and hex on hover), a field
+  to type a hex code or RGB values, and a "Custom colour…" button for the browser's own picker. The colours, with their Pantone references, are listed
   at the top of `banner-editor/app.js` (source: the UIB visual identity manual, logo.uib.cat).
 - **Logo**: choose the UIB logo or the UIB · MIPro Soft group logo (copies of `logos/mipro-soft/` live in
   `banner-editor/assets/logos/`). In *Auto* mode it checks how bright the area behind the logo is and picks the negative (white),

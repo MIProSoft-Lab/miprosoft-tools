@@ -18,32 +18,40 @@ const PRESETS = [
  * pair is for the logo; the secondary palette is for posters, signage and
  * similar materials, such as these banners. Hex values come from the manual's RGB.
  */
-const UIB = {
-  // Institutional
-  blue: '#0065bd',        // Pantone 300 C
-  black: '#000000',       // Pantone Process Black
-  // Secondary
-  lavender: '#a1ace3',    // Pantone 2716 C (the manual's web value, #9999cc, doesn't match its RGB)
-  indigo: '#3e5694',      // Pantone 7685 C
-  mauve: '#918693',       // Pantone 7653 C
-  sand: '#d4bea6',        // Pantone 4675 C
-  paleSky: '#c3dbe5',     // Pantone 7457 C
-  teal: '#7cb5b2',        // Pantone 7472 C
-  deepGreen: '#25332e',   // Pantone 5535 C
-  terracotta: '#b78b69',  // Pantone 7515 C
-  ochre: '#caa365',       // Pantone 7509 C
-  stone: '#d4d1c4',       // Pantone 7527 C
-  slateBlue: '#919dba',   // Pantone 535 C
-  brown: '#683c23',       // Pantone 168 C
-  charcoal: '#3a3c39',    // Pantone 447 C
-  warmGrey: '#d4d0ca',    // Pantone Warm Grey 1 C
-  chestnut: '#5d3b20',    // Pantone 1545 C
-  wheat: '#d8c9a4',       // Pantone 468 C
-  olive: '#44492e',       // Pantone 5743 C
-  pine: '#506841',        // Pantone 7743 C
-  taupe: '#9e9383',       // Pantone 7530 C
-  lime: '#94bb20',        // Pantone 376 C
-};
+const UIB_PALETTE = [
+  { group: 'Institutional', colours: [
+    { key: 'blue', name: 'UIB blue', pantone: 'Pantone 300 C', hex: '#0065bd' },
+    { key: 'black', name: 'Black', pantone: 'Pantone Process Black', hex: '#000000' },
+  ] },
+  { group: 'Secondary palette', colours: [
+    // The manual's web value for 2716 C, #9999cc, doesn't match its RGB (161, 172, 227).
+    { key: 'lavender', name: 'Lavender', pantone: 'Pantone 2716 C', hex: '#a1ace3' },
+    { key: 'indigo', name: 'Indigo', pantone: 'Pantone 7685 C', hex: '#3e5694' },
+    { key: 'mauve', name: 'Mauve', pantone: 'Pantone 7653 C', hex: '#918693' },
+    { key: 'sand', name: 'Sand', pantone: 'Pantone 4675 C', hex: '#d4bea6' },
+    { key: 'paleSky', name: 'Pale sky', pantone: 'Pantone 7457 C', hex: '#c3dbe5' },
+    { key: 'teal', name: 'Teal', pantone: 'Pantone 7472 C', hex: '#7cb5b2' },
+    { key: 'deepGreen', name: 'Deep green', pantone: 'Pantone 5535 C', hex: '#25332e' },
+    { key: 'terracotta', name: 'Terracotta', pantone: 'Pantone 7515 C', hex: '#b78b69' },
+    { key: 'ochre', name: 'Ochre', pantone: 'Pantone 7509 C', hex: '#caa365' },
+    { key: 'stone', name: 'Stone', pantone: 'Pantone 7527 C', hex: '#d4d1c4' },
+    { key: 'slateBlue', name: 'Slate blue', pantone: 'Pantone 535 C', hex: '#919dba' },
+    { key: 'brown', name: 'Brown', pantone: 'Pantone 168 C', hex: '#683c23' },
+    { key: 'charcoal', name: 'Charcoal', pantone: 'Pantone 447 C', hex: '#3a3c39' },
+    { key: 'warmGrey', name: 'Warm grey', pantone: 'Pantone Warm Grey 1 C', hex: '#d4d0ca' },
+    { key: 'chestnut', name: 'Chestnut', pantone: 'Pantone 1545 C', hex: '#5d3b20' },
+    { key: 'wheat', name: 'Wheat', pantone: 'Pantone 468 C', hex: '#d8c9a4' },
+    { key: 'olive', name: 'Olive', pantone: 'Pantone 5743 C', hex: '#44492e' },
+    { key: 'pine', name: 'Pine', pantone: 'Pantone 7743 C', hex: '#506841' },
+    { key: 'taupe', name: 'Taupe', pantone: 'Pantone 7530 C', hex: '#9e9383' },
+    { key: 'lime', name: 'Lime', pantone: 'Pantone 376 C', hex: '#94bb20' },
+  ] },
+  { group: 'Other', colours: [
+    { key: 'white', name: 'White', hex: '#ffffff' },
+  ] },
+];
+/** UIB.<key> → hex, for the gradient presets. */
+const UIB = Object.fromEntries(UIB_PALETTE.flatMap((g) => g.colours.map((c) => [c.key, c.hex])));
 
 /**
  * A gradient preset, in the style of the official sample banners: two clearly
@@ -599,6 +607,7 @@ function syncInputs(keys) {
     } else el.value = state[key];
   }
   document.querySelector('.custom-size').classList.toggle('visible', state.preset === 'custom');
+  ColourPicker.refresh();
 }
 
 function setupForm() {
@@ -632,12 +641,9 @@ function setupForm() {
     swatches.append(heading, grid);
   }
 
-  // Every UIB colour as a suggestion in the colour pickers (shown by Chromium browsers).
-  const list = document.createElement('datalist');
-  list.id = 'uib-colours';
-  for (const hex of Object.values(UIB)) list.append(new Option('', hex));
-  document.body.appendChild(list);
-  for (const el of document.querySelectorAll('input[type=color]')) el.setAttribute('list', list.id);
+  // Colour fields: a popover with the UIB palette, a hex/RGB field and the
+  // browser's own picker (../assets/colour-picker.js).
+  ColourPicker.enhance(document.querySelectorAll('input[type=color]'), UIB_PALETTE);
 
   for (const el of inputs) {
     const evt = el.tagName === 'SELECT' || el.type === 'checkbox' ? 'change' : 'input';
