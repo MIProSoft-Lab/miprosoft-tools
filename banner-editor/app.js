@@ -12,20 +12,100 @@ const PRESETS = [
   { id: 'custom', name: 'Custom…', w: 0, h: 0 },
 ];
 
-const GRADIENTS = [
-  { name: 'Lila → Or', gradC1: '#9e3f97', gradA1: 85, gradC2: '#b8962e', gradA2: 80, gradAngle: 90, labelBg: '#8a2459' },
-  { name: 'Blau', gradC1: '#003a78', gradA1: 90, gradC2: '#00a3e0', gradA2: 65, gradAngle: 90, labelBg: '#002b5c' },
-  { name: 'Magenta → Taronja', gradC1: '#a3195b', gradA1: 88, gradC2: '#f39200', gradA2: 75, gradAngle: 90, labelBg: '#7a0f43' },
-  { name: 'Verd', gradC1: '#0b6b4f', gradA1: 88, gradC2: '#3fb6a8', gradA2: 70, gradAngle: 90, labelBg: '#06473a' },
-  { name: 'Fosc', gradC1: '#14142b', gradA1: 92, gradC2: '#14142b', gradA2: 25, gradAngle: 90, labelBg: '#005db9' },
-  { name: 'Clar', gradC1: '#ffffff', gradA1: 92, gradC2: '#ffffff', gradA2: 30, gradAngle: 90, labelBg: '#005db9' },
+/**
+ * UIB colours, from the visual identity manual
+ * (logo.uib.cat/Manual-dIdentitat-Visual-Corporativa/colors/). The institutional
+ * pair is for the logo; the secondary palette is for posters, signage and
+ * similar materials, such as these banners. Hex values come from the manual's RGB.
+ */
+const UIB = {
+  // Institutional
+  blue: '#0065bd',        // Pantone 300 C
+  black: '#000000',       // Pantone Process Black
+  // Secondary
+  lavender: '#a1ace3',    // Pantone 2716 C (the manual's web value, #9999cc, doesn't match its RGB)
+  indigo: '#3e5694',      // Pantone 7685 C
+  mauve: '#918693',       // Pantone 7653 C
+  sand: '#d4bea6',        // Pantone 4675 C
+  paleSky: '#c3dbe5',     // Pantone 7457 C
+  teal: '#7cb5b2',        // Pantone 7472 C
+  deepGreen: '#25332e',   // Pantone 5535 C
+  terracotta: '#b78b69',  // Pantone 7515 C
+  ochre: '#caa365',       // Pantone 7509 C
+  stone: '#d4d1c4',       // Pantone 7527 C
+  slateBlue: '#919dba',   // Pantone 535 C
+  brown: '#683c23',       // Pantone 168 C
+  charcoal: '#3a3c39',    // Pantone 447 C
+  warmGrey: '#d4d0ca',    // Pantone Warm Grey 1 C
+  chestnut: '#5d3b20',    // Pantone 1545 C
+  wheat: '#d8c9a4',       // Pantone 468 C
+  olive: '#44492e',       // Pantone 5743 C
+  pine: '#506841',        // Pantone 7743 C
+  taupe: '#9e9383',       // Pantone 7530 C
+  lime: '#94bb20',        // Pantone 376 C
+};
+
+/**
+ * A gradient preset, in the style of the official sample banners: two clearly
+ * different hues at a similar strength (e.g. purple → gold), both quite opaque,
+ * so the banner reads as colour while the photo still shows through. The deeper
+ * colour goes on the left, behind the text; labelBg is a darker palette colour
+ * for the label band.
+ */
+const grad = (name, gradC1, gradC2, labelBg, gradA1 = 85, gradA2 = 80) =>
+  ({ name, gradC1, gradA1, gradC2, gradA2, gradAngle: 90, labelBg });
+
+const GRADIENT_GROUPS = [
+  { group: 'Sample banners', items: [
+    grad('Purple → Gold', '#9e3f97', '#b8962e', '#8a2459'),
+    grad('Blue', '#003a78', '#00a3e0', '#002b5c', 90, 65),
+    grad('Magenta → Orange', '#a3195b', '#f39200', '#7a0f43', 88, 75),
+    grad('Green', '#0b6b4f', '#3fb6a8', '#06473a', 88, 70),
+    grad('Dark', '#14142b', '#14142b', UIB.blue, 92, 25),
+    grad('Light', '#ffffff', '#ffffff', UIB.blue, 92, 30),
+  ] },
+  { group: 'UIB secondary palette', items: [
+    grad('Mauve → Ochre', UIB.mauve, UIB.ochre, UIB.indigo),
+    grad('Mauve → Terracotta', UIB.mauve, UIB.terracotta, UIB.indigo),
+    grad('Mauve → Teal', UIB.mauve, UIB.teal, UIB.indigo),
+    grad('Indigo → Ochre', UIB.indigo, UIB.ochre, UIB.blue),
+    grad('Indigo → Terracotta', UIB.indigo, UIB.terracotta, UIB.blue),
+    grad('Indigo → Teal', UIB.indigo, UIB.teal, UIB.blue),
+    grad('Indigo → Lime', UIB.indigo, UIB.lime, UIB.blue),
+    grad('Pine → Ochre', UIB.pine, UIB.ochre, UIB.deepGreen),
+    grad('Pine → Lime', UIB.pine, UIB.lime, UIB.deepGreen),
+    grad('Deep green → Terracotta', UIB.deepGreen, UIB.terracotta, UIB.pine),
+    grad('Brown → Teal', UIB.brown, UIB.teal, UIB.chestnut),
+    grad('Brown → Lavender', UIB.brown, UIB.lavender, UIB.chestnut),
+    grad('Chestnut → Ochre', UIB.chestnut, UIB.ochre, UIB.brown),
+  ] },
+  { group: 'UIB blue', items: [
+    grad('UIB blue → Ochre', UIB.blue, UIB.ochre, UIB.indigo),
+    grad('UIB blue → Teal', UIB.blue, UIB.teal, UIB.indigo),
+    grad('UIB blue', UIB.blue, UIB.blue, UIB.indigo, 92, 55),
+    grad('Black → UIB blue', UIB.black, UIB.blue, UIB.blue),
+  ] },
+  { group: 'Light (dark text)', items: [
+    grad('Pale sky → Stone', UIB.paleSky, UIB.stone, UIB.indigo, 92, 75),
+    grad('Wheat → Warm grey', UIB.wheat, UIB.warmGrey, UIB.chestnut, 92, 75),
+  ] },
 ];
+const GRADIENTS = GRADIENT_GROUPS.flatMap((g) => g.items);
+const GRADIENT_KEYS = ['gradC1', 'gradA1', 'gradC2', 'gradA2', 'gradAngle', 'labelBg'];
+const presetButtons = new Map(); // preset → its swatch button
+
+/** Highlights the preset matching the current gradient, and shows its name. */
+function updateActivePreset() {
+  const active = GRADIENTS.find((g) => GRADIENT_KEYS.every((k) => String(g[k]).toLowerCase() === String(state[k]).toLowerCase()));
+  for (const [g, b] of presetButtons) b.classList.toggle('active', g === active);
+  document.getElementById('gradientName').textContent = active ? active.name : 'Custom gradient';
+}
 
 const DEFAULTS = {
   format: 'png',
   preset: 'link', customW: 1200, customH: 630,
   imgZoom: 100, imgX: 50, imgY: 50, imgSat: 70, imgBright: 100,
-  ...pick(GRADIENTS[0], ['gradC1', 'gradA1', 'gradC2', 'gradA2', 'gradAngle', 'labelBg']),
+  ...pick(GRADIENTS[0], ['gradC1', 'gradA1', 'gradC2', 'gradA2', 'gradAngle', 'labelBg']), // Purple → Gold, as in the sample
   gradBlend: 'source-over',
   cornerShow: true, cornerColor: '#ffffff',
   logoBrand: 'team', logoVariant: 'auto', logoSize: 100,
@@ -338,6 +418,7 @@ function scheduleRender() {
     note.textContent = state.logoVariant === 'auto' ? `→ ${{ white: 'negative', dark: 'positive', color: 'full colour' }[variant]}` : '';
     document.getElementById('dropHint').hidden = !!bgImage;
     document.getElementById('removeImageBtn').hidden = !bgImage;
+    updateActivePreset();
   });
 }
 
@@ -524,22 +605,39 @@ function setupForm() {
   const presetSelect = document.getElementById('presetSelect');
   for (const p of PRESETS) presetSelect.add(new Option(p.name, p.id));
 
+  // Gradient presets, in groups; the name shows on hover and under the swatches.
   const swatches = document.getElementById('gradientPresets');
-  for (const g of GRADIENTS) {
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.textContent = g.name;
-    b.style.background = `linear-gradient(90deg, ${hexToRgba(g.gradC1, 100)}, ${hexToRgba(g.gradC2, Math.max(g.gradA2, 40))}), #888`;
-    if (g.name === 'Clar') b.style.color = DARK;
-    b.addEventListener('click', () => {
-      const { name, ...values } = g;
-      Object.assign(state, values);
-      syncInputs();
-      saveSettings();
-      scheduleRender();
-    });
-    swatches.appendChild(b);
+  for (const { group, items } of GRADIENT_GROUPS) {
+    const heading = document.createElement('p');
+    heading.className = 'swatch-group';
+    heading.textContent = group;
+    const grid = document.createElement('div');
+    grid.className = 'swatch-grid';
+    for (const g of items) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.title = g.name;
+      b.setAttribute('aria-label', `Gradient: ${g.name}`);
+      b.style.background = `linear-gradient(90deg, ${g.gradC1}, ${hexToRgba(g.gradC2, Math.max(g.gradA2, 60))}), #fff`;
+      b.addEventListener('click', () => {
+        const { name, ...values } = g;
+        Object.assign(state, values);
+        syncInputs();
+        saveSettings();
+        scheduleRender();
+      });
+      presetButtons.set(g, b);
+      grid.appendChild(b);
+    }
+    swatches.append(heading, grid);
   }
+
+  // Every UIB colour as a suggestion in the colour pickers (shown by Chromium browsers).
+  const list = document.createElement('datalist');
+  list.id = 'uib-colours';
+  for (const hex of Object.values(UIB)) list.append(new Option('', hex));
+  document.body.appendChild(list);
+  for (const el of document.querySelectorAll('input[type=color]')) el.setAttribute('list', list.id);
 
   for (const el of inputs) {
     const evt = el.tagName === 'SELECT' || el.type === 'checkbox' ? 'change' : 'input';

@@ -97,7 +97,12 @@ Then export `assets/logo.svg` to a 512×512 PNG with a transparent background (a
 ## Banner editor
 
 - **Background image**: choose a file, drop it on the preview or paste it. Drag the preview to reposition it and scroll to zoom.
-- **Gradient**: two colours with their own opacity, angle and blend mode, plus presets.
+- **Gradient**: two colours with their own opacity, angle and blend mode. Presets come in groups: the original
+  sample-banner gradients; combinations from the UIB secondary palette in the same style (two contrasting hues,
+  e.g. Indigo → Ochre, Pine → Lime, Brown → Teal), so each kind of activity can have its own look; UIB blue with
+  secondary colours; and two light presets for dark text. The colour pickers
+  suggest every UIB colour (in Chromium-based browsers). The colours, with their Pantone references, are listed
+  at the top of `banner-editor/app.js` (source: the UIB visual identity manual, logo.uib.cat).
 - **Logo**: choose the UIB logo or the UIB · MIPro Soft group logo (copies of `logos/mipro-soft/` live in
   `banner-editor/assets/logos/`). In *Auto* mode it checks how bright the area behind the logo is and picks the negative (white),
   positive (dark) or full-colour version. You can also choose one yourself.
